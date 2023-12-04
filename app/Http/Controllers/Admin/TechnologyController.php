@@ -26,7 +26,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.technologies.create');
     }
 
     /**
@@ -37,7 +37,14 @@ class TechnologyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $new_technology = new Technology();
+        $new_technology->slug = Technology::generateSlug($request->name, '-');
+        $new_technology->fill($data);
+
+        $new_technology->save();
+
+        return redirect()->route('admin.technology.index');
     }
 
     /**
@@ -46,9 +53,9 @@ class TechnologyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Technology $technology)
     {
-        //
+        return view('admin.technologies.show', $technology);
     }
 
     /**
@@ -80,8 +87,10 @@ class TechnologyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Technology $technology)
     {
-        //
+        $route = route('admin.projects.destroy', $technology);
+        $technology->delete();
+        return redirect()->route('admin.technologies.index')->with('success', 'the technology was successfully deleted');
     }
 }

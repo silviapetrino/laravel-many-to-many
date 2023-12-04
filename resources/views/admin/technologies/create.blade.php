@@ -3,13 +3,13 @@
 
 @section('content')
 
-{{--  creating a new type --}}
+{{--  creating a new technology --}}
 
 <div class="container py-5">
-    <form action="{{ route('admin.types.store') }}" method="POST" class="text-white" style="width: 500px;>
+    <form action="{{ route('admin.technologies.store') }}" method="POST" class="text-white" style="width: 500px;>
         @csrf
         @method('POST')
-        <h2>Add new type</h2>
+        <h2>Add new technology</h2>
 
         {{-- print all errors --}}
         @if($errors->any())
@@ -24,7 +24,7 @@
 
 
             <div class="mb-3">
-                <label for="type" class="form-label">Type</label>
+                <label for="type" class="form-label">Technology name:</label>
                 <input type="text" class="form-control" id="name" name="name">
             </div>
 
