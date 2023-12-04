@@ -30,8 +30,9 @@
                 <p class="text-danger fw-bold">{{ $message }}</p>
                 @enderror
             </div>
+            {{-- select type  --}}
 
-            <div class="mb-3">
+            <div class="mb-3 select type">
                 <label for="type_id" class="form-label">Type</label>
                 <select class="form-select" name="type_id" id="type_id">
                     <option value="">Select type</option>
@@ -43,8 +44,26 @@
                     @endforeach
                 </select>
             </div>
+            {{-- choose technologies  --}}
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                <span class="pe-2">Choose technologies:</span>
 
+                @foreach ($technologies as $technology)
+                    <input
+                    type="checkbox"
+                    class="btn-check"
+                    id="technology_{{$technology->id}}"
+                    autocomplete="off"
+                    name="technologies[]"
+                    value="{{ $technology->id }}"
+                    @if (in_array($technology->id, old('technologies', [])))
+                        checked
+                    @endif
+                    >
 
+                    <label class="btn btn-outline-primary" for="technology_{{$technology->id}}"">{{ $technology->name }}</label>
+                @endforeach
+            </div>
 
 
             <div class="mb-3">
@@ -56,7 +75,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="release_date" class="form-label">release date: </label>
+                <label for="release_date" class="form-label">Release date: (format yyyy-mm-dd) </label>
                 <input type="text" class="form-control @error('release_date') is-invalid @enderror" id="release_date" name="release_date" value="{{ old('title', $project?->release_date)}}">
                 @error('release_date')
                 <p class="text-danger fw-bold">{{ $message }}</p>

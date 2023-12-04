@@ -8,6 +8,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use App\Models\Type;
+use App\Models\Technology;
 
 class ProjectController extends Controller
 {
@@ -35,8 +36,9 @@ class ProjectController extends Controller
         $route = route('admin.projects.store');
         $project = null;
         $types = Type::all();
+        $technologies = Technology::all();
 
-        return view('admin.projects.create-edit', compact('title','method', 'route', 'project', 'types'));
+        return view('admin.projects.create-edit', compact('title','method', 'route', 'project', 'types', 'technologies'));
     }
 
     /**
@@ -51,7 +53,12 @@ class ProjectController extends Controller
         $new_project = new Project();
         $new_project->fill($data);
         $new_project->slug = Project::generateSlug($request->title, '-');
+
+
         $new_project->save();
+        if(array_key_exists('technologies', $data)){
+            $new_project->technologies()->attach($data['technologies']);
+        }
 
         return redirect()->route('admin.projects.show' , $new_project);
     }
@@ -79,7 +86,8 @@ class ProjectController extends Controller
         $method = 'PUT';
         $route = route('admin.projects.update', $project);
         $types = Type::all();
-        return view('admin.projects.create-edit', compact('title','method', 'route', 'project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create-edit', compact('title','method', 'route', 'project', 'types', 'technologies'));
     }
 
     /**
