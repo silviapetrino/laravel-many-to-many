@@ -39,7 +39,7 @@
                     <td>{{ $project->type?->name ?? '-'}}</td>
                     <td>
                         @forelse ($project->technologies as $technology)
-                           <span class="badge bg-primary">{{ $technology->name }} </span>
+                           <a href="{{ route('admin.project-technology', $technology)}}"><span class="badge bg-primary">{{ $technology->name }} </span></a>
                         @empty
                             -
                         @endforelse

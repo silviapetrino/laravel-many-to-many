@@ -17,12 +17,14 @@
                     <span>Project list</span>
                 </a>
             </li>
+
             <li>
                 <a href="{{ route('admin.technologies.index')}}">
                     <i class="fa-solid fa-gear"></i>
                     <span>Technologies</span>
                 </a>
             </li>
+          
             <li>
                 <a href="{{ route('admin.types.index')}}">
                     <i class="fa-regular fa-circle"></i>
@@ -35,6 +37,7 @@
                     <span>Project by type</span>
                 </a>
             </li>
+
         </ul>
     </nav>
 </aside>
