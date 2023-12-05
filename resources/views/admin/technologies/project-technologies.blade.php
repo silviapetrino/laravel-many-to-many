@@ -4,7 +4,7 @@
 
 
 <div class="container">
-    <h1 class="text-white">Project List made with {{ $technology->name }} technology</h1>
+    <h1 class="text-white">Projects made with {{ $technology->name }} technology</h1>
 
 
 <table class="table table-dark">
