@@ -24,6 +24,7 @@ class ProjectController extends Controller
         return view('admin.projects.index', compact('projects'));
     }
 
+   
     /**
      * Show the form for creating a new resource.
      *

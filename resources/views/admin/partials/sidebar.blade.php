@@ -29,6 +29,12 @@
                     <span>Types</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('admin.type-project')}}">
+                    <i class="fa-regular fa-circle"></i>
+                    <span>Project by type</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>
