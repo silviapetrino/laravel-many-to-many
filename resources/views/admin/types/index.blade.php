@@ -11,6 +11,22 @@
         </div>
          @endif
 
+         @if ($errors->any())
+         <div class="alert alert-danger" role="alert">
+              <ul>
+                 @foreach ($errors->all() as $error)
+                     <li>{{ $error }}</li>
+                 @endforeach
+             </ul>
+         </div>
+         @endif
+
+         @if (session('error'))
+             <div class="alert alert-danger" role="alert">
+                 {{ session('error') }}
+             </div>
+         @endif
+
         <a class="btn btn-light" href="{{ route('admin.types.create') }}">Add new type +</i></a>
 
         <table class="table table-dark table-hover types" width="50%">
@@ -23,23 +39,30 @@
             <tbody>
                 @foreach ($types as $type)
                     <tr>
-                        <th scope="row">
-                            <i class="fa-regular fa-circle mx-1"></i>
-                             {{ $type->name }}
-                        </th>
-                        <th scope="row">
+                        <td>
+                         {{$type->name}}
+                        </td>
+
+
+                        <td scope="row">
                             {{-- actions --}}
                             <a class="btn btn-light" href="{{ route('admin.types.show', $type) }}"><i class="fa-solid fa-file-lines"></i></i></a>
+
                             @include('admin.partials.delete-form', [
                             'route' => route('admin.types.destroy', $type),
                             'message' => 'Are you sure you want to delete this type?',
                             ])
-                        </th>
+
+                            <a class="btn btn-warning" href="{{ route('admin.types.edit', $type) }}"><i class="fa-solid fa-pencil"></i></i></a>
+
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
           </table>
     </div>
+
+
 
 
 @endsection

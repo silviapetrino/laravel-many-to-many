@@ -23,7 +23,7 @@ class TypeController extends Controller
     }
 
     public function typeProject(){
-        $types = type::all();
+        $types = Type::all();
         return view('admin.types.type-project', compact('types'));
     }
 
@@ -48,14 +48,19 @@ class TypeController extends Controller
      */
     public function store(TypeRequest $request)
     {
-        $data = $request->all();
-        $new_type = new Type();
-        $new_type->slug = Type::generateSlug($request->name, '-');
-        $new_type->fill($data);
+        // prima di creare una nuova categoria verifico se esiste già
 
-        $new_type->save();
+        $exixts = Type::where('name', $request->name)->first();
+        if($exixts){
+            return redirect()->route('admin.types.index')->with('error', 'type exists');
+        }else{
+            $new_type = new Type();
+            $new_type->name = $request->name;
+            $new_type->slug = Type::generateSlug($request->name, Type::class);
+            $new_type->save();
+            return redirect()->route('admin.types.index')->with('success', 'Type added successfully');
+        }
 
-        return redirect()->route('admin.types.index');
     }
 
     /**
@@ -75,9 +80,9 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Type $type)
     {
-        //
+        return view('admin.types.edit', $type);
     }
 
     /**
@@ -87,9 +92,20 @@ class TypeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TypeRequest $request, Type $type)
     {
-        //
+        $form_data = $request->all();
+
+        $exixts = Type::where('name', $request->name)->first();
+        if($exixts){
+            return redirect()->route('admin.types.index')->with('error', 'Type exist');
+        }
+
+        $request['slug'] = Str::slug($request->name, '-');
+
+        $type->update($form_data);
+
+        return redirect()->route('admin.types.index', $type);
     }
 
     /**
